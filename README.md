@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pariksha - Exam Portal Platform
 
-## Getting Started
+Pariksha is a modern, blazing fast exam portal built with Next.js 16 (App Router), Tailwind CSS v4, and PostgreSQL (via Supabase & Prisma).
 
-First, run the development server:
+## Features
+- **Student Portal:** Take exams with a live timer, interactive question palette, negative marking calculation, and instant detailed review reports.
+- **Admin Dashboard:** Fully secure owner portal to manage Categories, Subjects, Exams, and individual Questions.
+- **Analytics:** Track student progress, view global pass rates, and see detailed reports of every exam attempt.
+- **Auto-Saving:** Student progress is synced to the database every 15 seconds.
+
+---
+
+## Deploying to Vercel (Production)
+
+This project is completely optimized and ready to be deployed to Vercel for free.
+
+### Step 1: Push to GitHub
+1. Create a new repository on your GitHub account.
+2. Open your terminal in this project folder and run:
+   ```bash
+   git add .
+   git commit -m "Initial commit - Pariksha ready for production"
+   git branch -M main
+   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+   git push -u origin main
+   ```
+
+### Step 2: Import to Vercel
+1. Log in to [Vercel](https://vercel.com).
+2. Click **Add New... > Project**.
+3. Import your newly created GitHub repository.
+
+### Step 3: Configure Environment Variables
+Before clicking "Deploy", open the **Environment Variables** section in Vercel and paste the variables from your local `.env.local` file:
+- `DATABASE_URL` (Your Supabase connection pooler URL, port 6543)
+- `DIRECT_URL` (Your Supabase direct URL, port 5432)
+- `SESSION_SECRET` (Your secure random string)
+
+### Step 4: Deploy
+Click **Deploy**. Vercel will automatically detect Next.js, run `npm install`, and run `npm run build`. 
+Within 2 minutes, your exam portal will be live on the internet!
+
+---
+
+## Local Development Setup
+
+If you want to continue building locally:
 
 ```bash
+# Install dependencies
+npm install
+
+# Push database schema (make sure URLs are in .env.local)
+npx prisma db push
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Visit `http://localhost:3000` to view the student portal, and `http://localhost:3000/admin/login` for the admin dashboard.

@@ -1,0 +1,237 @@
+// Pariksha Exam Portal — Prisma Schema
+// Database: PostgreSQL (via Supabase)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────
+
+enum Role {
+  STUDENT
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum CategoryType {
+  CLASS       // e.g. Class 6, Class 10
+  COMPETITIVE // e.g. UPSC, SSC, Banking
+  LANGUAGE    // e.g. Hindi, English
+  CUSTOM      // anything else the owner creates
+}
+
+enum CorrectOption {
+  A
+  B
+  C
+  D
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+// ─────────────────────────────────────────
+// USER
+// ─────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String   // bcrypt hashed
+  role      Role     @default(STUDENT)
+  class     String?  // e.g. "Class 10", "UPSC Aspirant"
+  language  String   @default("en")
+  avatarUrl String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  attempts  Attempt[]
+  sessions  Session[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────
+// SESSION (stateless JWT, stored in DB for revocation)
+// ─────────────────────────────────────────
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ─────────────────────────────────────────
+// CATEGORY
+// ─────────────────────────────────────────
+
+model Category {
+  id          String       @id @default(cuid())
+  name        String
+  nameHi      String?      // Hindi/regional translation
+  slug        String       @unique
+  description String?
+  iconUrl     String?
+  color       String?      // hex color for UI cards e.g. "#4F46E5"
+  type        CategoryType @default(CLASS)
+  order       Int          @default(0)
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  subjects Subject[]
+
+  @@map("categories")
+}
+
+// ─────────────────────────────────────────
+// SUBJECT
+// ─────────────────────────────────────────
+
+model Subject {
+  id          String   @id @default(cuid())
+  name        String
+  nameHi      String?
+  slug        String   @unique
+  description String?
+  iconUrl     String?
+  categoryId  String
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  exams    Exam[]
+
+  @@index([categoryId])
+  @@map("subjects")
+}
+
+// ─────────────────────────────────────────
+// EXAM
+// ─────────────────────────────────────────
+
+model Exam {
+  id              String   @id @default(cuid())
+  title           String
+  titleHi         String?
+  description     String?
+  subjectId       String
+  duration        Int      // in minutes
+  totalMarks      Int      @default(0)   // auto-calculated
+  passingScore    Int      @default(0)   // percentage (0-100)
+  negativeMarking Boolean  @default(false)
+  negativeFactor  Float    @default(0.25) // fraction deducted per wrong answer
+  shuffleQuestions Boolean @default(false)
+  isPublished     Boolean  @default(false)
+  instructions    String?
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  subject   Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  questions Question[]
+  attempts  Attempt[]
+
+  @@index([subjectId])
+  @@map("exams")
+}
+
+// ─────────────────────────────────────────
+// QUESTION
+// ─────────────────────────────────────────
+
+model Question {
+  id            String        @id @default(cuid())
+  examId        String
+  text          String        // question text (markdown supported)
+  textHi        String?       // Hindi translation
+  imageUrl      String?       // optional image (Cloudinary URL)
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  optionAHi     String?
+  optionBHi     String?
+  optionCHi     String?
+  optionDHi     String?
+  correctOption CorrectOption
+  explanation   String?       // shown after attempt
+  explanationHi String?
+  marks         Int           @default(1)
+  order         Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  exam           Exam            @relation(fields: [examId], references: [id], onDelete: Cascade)
+  attemptAnswers AttemptAnswer[]
+
+  @@index([examId])
+  @@map("questions")
+}
+
+// ─────────────────────────────────────────
+// ATTEMPT
+// ─────────────────────────────────────────
+
+model Attempt {
+  id          String        @id @default(cuid())
+  userId      String
+  examId      String
+  startedAt   DateTime      @default(now())
+  submittedAt DateTime?
+  score       Float         @default(0)   // actual marks earned
+  totalMarks  Int           @default(0)   // snapshot of exam total marks
+  percentage  Float         @default(0)
+  timeTaken   Int?          // seconds
+  status      AttemptStatus @default(IN_PROGRESS)
+  createdAt   DateTime      @default(now())
+
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam    Exam            @relation(fields: [examId], references: [id], onDelete: Cascade)
+  answers AttemptAnswer[]
+
+  @@index([userId])
+  @@index([examId])
+  @@map("attempts")
+}
+
+// ─────────────────────────────────────────
+// ATTEMPT ANSWER
+// ─────────────────────────────────────────
+
+model AttemptAnswer {
+  id             String         @id @default(cuid())
+  attemptId      String
+  questionId     String
+  selectedOption CorrectOption? // null = skipped
+  isCorrect      Boolean        @default(false)
+  marksAwarded   Float          @default(0)
+
+  attempt  Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+  @@map("attempt_answers")
+}

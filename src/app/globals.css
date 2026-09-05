@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #4f46e5;
+  --color-primary-dark: #3730a3;
+  --color-accent: #f59e0b;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f97316;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
+
+/* Exam interface — prevent text selection during test */
+.exam-interface * {
+  user-select: none;
+}
+.exam-interface .question-text {
+  user-select: text;
+}
+
+/* Question palette dot states */
+.palette-dot {
+  @apply w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center cursor-pointer transition-all duration-150;
+}
+.palette-dot.unattempted {
+  @apply bg-white border-2 border-gray-300 text-gray-600 hover:border-indigo-400;
+}
+.palette-dot.attempted {
+  @apply bg-indigo-600 border-2 border-indigo-600 text-white;
+}
+.palette-dot.marked {
+  @apply bg-amber-400 border-2 border-amber-400 text-white;
+}
+.palette-dot.current {
+  @apply ring-2 ring-offset-2 ring-indigo-500 scale-110;
+}
+
+/* Timer color states */
+.timer-normal {
+  @apply text-gray-700;
+}
+.timer-warning {
+  @apply text-amber-600 font-bold;
+}
+.timer-danger {
+  @apply text-red-600 font-bold animate-pulse;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+}
+
+/* Gradient backgrounds for category cards */
+.gradient-class { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.gradient-science { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.gradient-math { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.gradient-history { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.gradient-upsc { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.gradient-ssc { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+.gradient-default { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
