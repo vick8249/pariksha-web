@@ -5,7 +5,7 @@ import { requireAdmin } from '@/lib/auth'
 import bcrypt from 'bcryptjs'
 
 export async function changeAdminPassword(formData: FormData) {
-  const adminId = await requireAdmin()
+  const session = await requireAdmin()
   
   const newPassword = formData.get('newPassword') as string
   const confirmPassword = formData.get('confirmPassword') as string
@@ -21,7 +21,7 @@ export async function changeAdminPassword(formData: FormData) {
   const hashedPassword = await bcrypt.hash(newPassword, 12)
   
   await db.user.update({
-    where: { id: adminId },
+    where: { id: session.userId },
     data: { password: hashedPassword }
   })
 
