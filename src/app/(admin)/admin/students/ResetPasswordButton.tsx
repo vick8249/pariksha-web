@@ -16,7 +16,7 @@ export default function ResetPasswordButton({ userId, studentName }: { userId: s
     try {
       const result = await resetStudentPassword(userId)
       if (result.success) {
-        window.alert(`SUCCESS!\n\nPassword for ${studentName} has been reset to:\n\n${result.tempPassword}\n\nPlease give this temporary password to the student immediately.`)
+        window.alert(`✅ SUCCESS!\n\nAccount: ${studentName}\nNew Temporary Password: ${result.tempPassword}\n\nPlease copy this password and share it with the student immediately. They must use this to log in.`)
       }
     } catch (error) {
       console.error(error)
