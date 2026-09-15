@@ -22,3 +22,13 @@ export async function resetStudentPassword(userId: string) {
   revalidatePath('/admin/students')
   return { success: true, tempPassword }
 }
+
+export async function deleteStudent(userId: string) {
+  await requireAdmin()
+  
+  await db.user.delete({
+    where: { id: userId, role: 'STUDENT' }
+  })
+  
+  revalidatePath('/admin/students')
+}

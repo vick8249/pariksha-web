@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, BookOpen, FolderOpen, Tag, Users,
-  BarChart3, LogOut, Settings, ChevronRight, GraduationCap, HelpCircle, Globe
+  BarChart3, LogOut, Settings, ChevronRight, GraduationCap, HelpCircle, Globe, ShieldCheck
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { logout } from '@/app/actions/auth'
@@ -18,7 +18,8 @@ const NAV_ITEMS = [
   { label: 'Students', href: '/admin/students', icon: Users },
   { label: 'Reports', href: '/admin/reports', icon: BarChart3 },
   { label: 'Platform Guide', href: '/admin/guide', icon: HelpCircle },
-  { label: 'Admin Accounts', href: '/admin/accounts', icon: Settings },
+  { label: 'Admin Accounts', href: '/admin/accounts', icon: ShieldCheck },
+  { label: 'My Settings', href: '/admin/settings', icon: Settings },
 ]
 
 const SECONDARY_ITEMS = [
