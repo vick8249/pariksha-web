@@ -1,4 +1,4 @@
-import { BookOpen, Users, FileText, Upload, Settings } from 'lucide-react'
+import { BookOpen, FileText, Upload } from 'lucide-react'
 
 export const metadata = { title: 'Admin Guide' }
 
@@ -17,15 +17,15 @@ export default function AdminGuidePage() {
             <div className="bg-indigo-100 p-2 rounded-lg text-indigo-700">
               <BookOpen className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">1. Hierarchy & Structure</h2>
+            <h2 className="text-xl font-bold text-gray-900">1. Hierarchy &amp; Structure</h2>
           </div>
           <p className="text-gray-600 mb-4 leading-relaxed">
             The platform is organized in a top-down structure. You must create them in this order:
           </p>
           <ul className="space-y-3 text-sm text-gray-600 list-disc pl-5">
-            <li><strong>Categories</strong> (e.g., "Class 10", "UPSC"). These are the main sections of your website.</li>
-            <li><strong>Subjects</strong> (e.g., "Science", "Indian Polity"). Subjects must belong to a Category.</li>
-            <li><strong>Exams</strong> (e.g., "Mock Test 1"). Exams must belong to a Subject.</li>
+            <li><strong>Categories</strong> (e.g., &quot;Class 10&quot;, &quot;UPSC&quot;). These are the main sections of your website.</li>
+            <li><strong>Subjects</strong> (e.g., &quot;Science&quot;, &quot;Indian Polity&quot;). Subjects must belong to a Category.</li>
+            <li><strong>Exams</strong> (e.g., &quot;Mock Test 1&quot;). Exams must belong to a Subject.</li>
             <li><strong>Questions</strong>. These are added inside an Exam.</li>
           </ul>
         </section>
@@ -36,15 +36,15 @@ export default function AdminGuidePage() {
             <div className="bg-emerald-100 p-2 rounded-lg text-emerald-700">
               <Upload className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">2. Creating Exams & Questions</h2>
+            <h2 className="text-xl font-bold text-gray-900">2. Creating Exams &amp; Questions</h2>
           </div>
           <p className="text-gray-600 mb-4 leading-relaxed">
             When you create an exam, the <strong>Total Marks</strong> start at 0. As you add questions, the system automatically calculates the total marks for the exam based on the marks you assign to each question.
           </p>
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4">
-            <h3 className="font-semibold text-amber-800 mb-2">Upcoming Feature: Bulk CSV Upload</h3>
+            <h3 className="font-semibold text-amber-800 mb-2">Bulk CSV Upload</h3>
             <p className="text-sm text-amber-700">
-              Soon, you will be able to download an Excel template, fill in 100 questions, and upload them all at once on the "Manage Questions" page instead of typing them one by one.
+              Download an Excel template, fill in up to hundreds of questions, and upload them all at once on the &quot;Manage Questions&quot; page instead of typing them one by one.
             </p>
           </div>
         </section>
@@ -55,13 +55,13 @@ export default function AdminGuidePage() {
             <div className="bg-blue-100 p-2 rounded-lg text-blue-700">
               <FileText className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">3. Analytics & Reports</h2>
+            <h2 className="text-xl font-bold text-gray-900">3. Analytics &amp; Reports</h2>
           </div>
           <p className="text-gray-600 mb-4 leading-relaxed">
             The <strong>Reports</strong> tab shows every completed exam attempt in real-time. It automatically calculates percentages and flags whether a student passed or failed based on the <em>Passing Score</em> you set when creating the exam.
           </p>
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-4 text-sm text-gray-600">
-            <strong>Pro Tip:</strong> An "Export to CSV" button will be added here shortly so you can download the marksheet and print it.
+            <strong>Pro Tip:</strong> An &quot;Export to CSV&quot; button is available so you can download the marksheet and print it.
           </div>
         </section>
       </div>

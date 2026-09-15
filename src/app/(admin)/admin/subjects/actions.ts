@@ -25,8 +25,15 @@ export async function createSubject(formData: FormData) {
     isActive: formData.get('isActive') === 'on',
   })
   
-  const slug = slugify(data.name)
-  await db.subject.create({ data: { ...data, slug } })
+  let slug = slugify(data.name)
+  let uniqueSlug = slug
+  let counter = 1
+  while (await db.subject.findUnique({ where: { slug: uniqueSlug } })) {
+    uniqueSlug = `${slug}-${counter}`
+    counter++
+  }
+  
+  await db.subject.create({ data: { ...data, slug: uniqueSlug } })
   
   revalidatePath('/admin/subjects')
   redirect('/admin/subjects')
@@ -43,8 +50,15 @@ export async function updateSubject(formData: FormData) {
     isActive: formData.get('isActive') === 'on',
   })
   
-  const slug = slugify(data.name)
-  await db.subject.update({ where: { id }, data: { ...data, slug } })
+  let slug = slugify(data.name)
+  let uniqueSlug = slug
+  let counter = 1
+  while (await db.subject.findUnique({ where: { slug: uniqueSlug } })) {
+    uniqueSlug = `${slug}-${counter}`
+    counter++
+  }
+  
+  await db.subject.update({ where: { id }, data: { ...data, slug: uniqueSlug } })
   
   revalidatePath('/admin/subjects')
   redirect('/admin/subjects')

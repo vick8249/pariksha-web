@@ -21,7 +21,6 @@ export async function signup(state: AuthFormState, formData: FormData): Promise<
 
   const { name, email, password, class: studentClass } = validated.data
 
-  // Check if email already exists
   const existing = await db.user.findUnique({ where: { email } })
   if (existing) {
     return { errors: { email: ['An account with this email already exists'] } }
@@ -40,10 +39,10 @@ export async function signup(state: AuthFormState, formData: FormData): Promise<
     email: user.email,
   })
 
-  redirect('/dashboard')
+  redirect('/')
 }
 
-/** Login an existing user (student or admin) */
+/** Login for students — rejects admin accounts */
 export async function login(state: AuthFormState, formData: FormData): Promise<AuthFormState> {
   const validated = LoginSchema.safeParse({
     email: formData.get('email'),
@@ -72,11 +71,44 @@ export async function login(state: AuthFormState, formData: FormData): Promise<A
     email: user.email,
   })
 
-  // Redirect based on role
-  if (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') {
-    redirect('/admin')
+  redirect('/')
+}
+
+/** Login exclusively for admins — rejects student accounts */
+export async function adminLogin(state: AuthFormState, formData: FormData): Promise<AuthFormState> {
+  const validated = LoginSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  })
+
+  if (!validated.success) {
+    return { errors: validated.error.flatten().fieldErrors }
   }
-  redirect('/dashboard')
+
+  const { email, password } = validated.data
+  const user = await db.user.findUnique({ where: { email } })
+
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return { message: 'Invalid email or password' }
+  }
+
+  if (!user.isActive) {
+    return { message: 'Your account has been deactivated.' }
+  }
+
+  // Block non-admin users from accessing the admin login
+  if (user.role !== 'ADMIN' && user.role !== 'SUPER_ADMIN') {
+    return { message: 'Access denied. This login is for admins only.' }
+  }
+
+  await createSession({
+    userId: user.id,
+    role: user.role,
+    name: user.name,
+    email: user.email,
+  })
+
+  redirect('/admin')
 }
 
 /** Logout — delete session cookie */

@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, BookOpen, FolderOpen, Tag, Users,
-  BarChart3, LogOut, Settings, ChevronRight, GraduationCap, HelpCircle
+  BarChart3, LogOut, Settings, ChevronRight, GraduationCap, HelpCircle, Globe
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { logout } from '@/app/actions/auth'
+import { ThemeToggle } from '@/components/shared/ThemeToggle'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, exact: true },
@@ -18,6 +19,10 @@ const NAV_ITEMS = [
   { label: 'Reports', href: '/admin/reports', icon: BarChart3 },
   { label: 'Platform Guide', href: '/admin/guide', icon: HelpCircle },
   { label: 'Admin Accounts', href: '/admin/accounts', icon: Settings },
+]
+
+const SECONDARY_ITEMS = [
+  { label: 'Home Website', href: '/', icon: Globe },
 ]
 
 export default function AdminSidebar({ adminName }: { adminName: string }) {
@@ -34,7 +39,6 @@ export default function AdminSidebar({ adminName }: { adminName: string }) {
         <p className="text-xs text-gray-400 mt-1">Owner Dashboard</p>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 p-4 space-y-1">
         {NAV_ITEMS.map(({ label, href, icon: Icon, exact }) => {
           const active = exact ? pathname === href : pathname.startsWith(href)
@@ -55,11 +59,28 @@ export default function AdminSidebar({ adminName }: { adminName: string }) {
             </Link>
           )
         })}
+
+        <div className="pt-4 mt-4 border-t border-gray-800 space-y-1">
+          {SECONDARY_ITEMS.map(({ label, href, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 text-gray-400 hover:bg-gray-800 hover:text-white"
+            >
+              <Icon className="w-5 h-5 flex-shrink-0" />
+              <span className="flex-1">{label}</span>
+            </Link>
+          ))}
+        </div>
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-800">
-        <div className="flex items-center gap-3 mb-3 px-2">
+      <div className="p-4 border-t border-gray-800 space-y-4">
+        <div className="flex items-center justify-between px-2">
+          <span className="text-sm text-gray-400">Theme</span>
+          <ThemeToggle />
+        </div>
+        <div className="flex items-center gap-3 px-2 pt-4 border-t border-gray-800/50">
           <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-xs font-bold">
             {adminName.charAt(0).toUpperCase()}
           </div>

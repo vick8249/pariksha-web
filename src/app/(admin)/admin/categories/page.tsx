@@ -1,8 +1,7 @@
 import { db } from '@/lib/db'
 import Link from 'next/link'
-import { Plus, Edit, Trash2, BookOpen } from 'lucide-react'
+import { Plus, Edit, BookOpen } from 'lucide-react'
 import { deleteCategory } from './actions'
-import { revalidatePath } from 'next/cache'
 import { DeleteButton } from '@/components/admin/DeleteButton'
 
 export const metadata = { title: 'Manage Categories' }

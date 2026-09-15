@@ -4,9 +4,9 @@ import { requireAuth } from '@/lib/auth'
 import Link from 'next/link'
 import {
   Trophy, CheckCircle, XCircle, Clock, BookOpen,
-  ChevronRight, ArrowRight, RotateCcw
+  ArrowRight, RotateCcw, Award
 } from 'lucide-react'
-import { formatTime, getGrade, calcPercentage } from '@/lib/utils'
+import { formatTime, getGrade } from '@/lib/utils'
 
 export const metadata = { title: 'Exam Result' }
 
@@ -39,7 +39,7 @@ export default async function ResultPage({
   const skippedCount = attempt.answers.filter((a) => a.selectedOption === null).length
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
+    <div className="min-h-screen bg-gray-50 pt-28 pb-10">
       <div className="max-w-2xl mx-auto px-4">
         {/* Result Card */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
@@ -113,12 +113,22 @@ export default async function ResultPage({
 
           {/* CTAs */}
           <div className="p-6 pt-0 space-y-3">
+            {/* Certificate button — only shown when passed */}
+            {passed && (
+              <Link
+                href={`/exam/${id}/result/${attemptId}/certificate`}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-white font-bold py-3 rounded-xl transition-all shadow-md hover:shadow-lg"
+              >
+                <Award className="w-5 h-5" />
+                Download / Print Certificate
+              </Link>
+            )}
             <Link
               href={`/exam/${id}/review/${attemptId}`}
               className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors"
             >
               <BookOpen className="w-5 h-5" />
-              Review All Questions & Explanations
+              Review All Questions &amp; Explanations
             </Link>
             <div className="flex gap-3">
               <Link

@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { CheckCircle, XCircle, MinusCircle, ChevronLeft, Lightbulb } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+import { cookies } from 'next/headers'
+import { translateQuestion, type Language } from '@/lib/i18n'
+
 export const metadata = { title: 'Review Answers' }
 
 export default async function ReviewPage({
@@ -15,19 +18,16 @@ export default async function ReviewPage({
   const { id, attemptId } = await params
   const session = await requireAuth()
 
+  const cookieStore = await cookies()
+  const lang = (cookieStore.get('lang')?.value || 'en') as Language
+
   const attempt = await db.attempt.findFirst({
     where: { id: attemptId, userId: session.userId, status: 'COMPLETED' },
     include: {
       exam: { select: { title: true } },
       answers: {
         include: {
-          question: {
-            select: {
-              text: true, imageUrl: true,
-              optionA: true, optionB: true, optionC: true, optionD: true,
-              correctOption: true, explanation: true, marks: true, order: true,
-            },
-          },
+          question: true,
         },
         orderBy: { question: { order: 'asc' } },
       },
@@ -39,7 +39,7 @@ export default async function ReviewPage({
   const OPTION_LABELS = { A: 'optionA', B: 'optionB', C: 'optionC', D: 'optionD' } as const
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 pt-28 pb-10">
       <div className="max-w-3xl mx-auto px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
@@ -68,7 +68,7 @@ export default async function ReviewPage({
         {/* Questions */}
         <div className="space-y-6">
           {attempt.answers.map((ans, idx) => {
-            const q = ans.question
+            const q = translateQuestion(ans.question, lang)
             const isCorrect = ans.isCorrect
             const isSkipped = ans.selectedOption === null
             const statusColor = isSkipped

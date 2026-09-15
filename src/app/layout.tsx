@@ -27,6 +27,8 @@ export const metadata: Metadata = {
   },
 }
 
+import { ThemeProvider } from '@/components/shared/ThemeProvider'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,7 +39,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 min-h-screen`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          storageKey="pariksha-theme-v2"
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

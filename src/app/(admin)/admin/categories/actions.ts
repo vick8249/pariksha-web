@@ -30,8 +30,15 @@ export async function createCategory(formData: FormData) {
     order: formData.get('order'),
     isActive: formData.get('isActive') === 'on',
   })
-  const slug = slugify(data.name)
-  await db.category.create({ data: { ...data, slug } })
+  let slug = slugify(data.name)
+  let uniqueSlug = slug
+  let counter = 1
+  while (await db.category.findUnique({ where: { slug: uniqueSlug } })) {
+    uniqueSlug = `${slug}-${counter}`
+    counter++
+  }
+  
+  await db.category.create({ data: { ...data, slug: uniqueSlug } })
   revalidatePath('/admin/categories')
   redirect('/admin/categories')
 }
@@ -49,8 +56,15 @@ export async function updateCategory(formData: FormData) {
     order: formData.get('order'),
     isActive: formData.get('isActive') === 'on',
   })
-  const slug = slugify(data.name)
-  await db.category.update({ where: { id }, data: { ...data, slug } })
+  let slug = slugify(data.name)
+  let uniqueSlug = slug
+  let counter = 1
+  while (await db.category.findUnique({ where: { slug: uniqueSlug } })) {
+    uniqueSlug = `${slug}-${counter}`
+    counter++
+  }
+  
+  await db.category.update({ where: { id }, data: { ...data, slug: uniqueSlug } })
   revalidatePath('/admin/categories')
   redirect('/admin/categories')
 }

@@ -2,6 +2,8 @@ import { db } from '@/lib/db'
 import { notFound, redirect } from 'next/navigation'
 import { requireAuth } from '@/lib/auth'
 import ExamInterface from '@/components/exam/ExamInterface'
+import { cookies } from 'next/headers'
+import { translateQuestion, type Language } from '@/lib/i18n'
 
 export default async function ExamStartPage({
   params,
@@ -19,11 +21,6 @@ export default async function ExamStartPage({
     include: {
       questions: {
         orderBy: { order: 'asc' },
-        select: {
-          id: true, text: true, imageUrl: true,
-          optionA: true, optionB: true, optionC: true, optionD: true,
-          marks: true,
-        },
       },
     },
   })
@@ -34,9 +31,14 @@ export default async function ExamStartPage({
   }
 
   // Shuffle questions if enabled
-  const questions = exam.shuffleQuestions
+  const rawQuestions = exam.shuffleQuestions
     ? [...exam.questions].sort(() => Math.random() - 0.5)
     : exam.questions
+
+  // Translate questions based on user's language preference
+  const cookieStore = await cookies()
+  const lang = (cookieStore.get('lang')?.value || 'en') as Language
+  const questions = rawQuestions.map(q => translateQuestion(q, lang))
 
   // Find or create attempt
   let attempt
@@ -58,6 +60,12 @@ export default async function ExamStartPage({
   }
 
   if (!attempt) {
+    // Abandon any stale in-progress attempts for this exam before creating a fresh one
+    await db.attempt.updateMany({
+      where: { userId: session.userId, examId: id, status: 'IN_PROGRESS' },
+      data: { status: 'ABANDONED' }
+    })
+
     // Create new attempt
     attempt = await db.attempt.create({
       data: {

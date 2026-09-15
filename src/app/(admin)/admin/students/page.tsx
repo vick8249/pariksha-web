@@ -1,6 +1,8 @@
 import { db } from '@/lib/db'
-import { Users, Search, GraduationCap } from 'lucide-react'
+import { Users, GraduationCap } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
+import ResetPasswordButton from './ResetPasswordButton'
+import Link from 'next/link'
 
 export const metadata = { title: 'Students' }
 
@@ -18,7 +20,7 @@ export default async function StudentsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-extrabold text-gray-900">Students ({students.length})</h1>
-          <p className="text-gray-500 mt-1 text-sm">View registered students and their activity</p>
+          <p className="text-gray-500 mt-1 text-sm">View registered students and manage their access</p>
         </div>
       </div>
 
@@ -36,6 +38,7 @@ export default async function StudentsPage() {
                 <th className="text-left px-5 py-3 font-semibold text-gray-600">Class</th>
                 <th className="text-center px-5 py-3 font-semibold text-gray-600">Total Exams Taken</th>
                 <th className="text-left px-5 py-3 font-semibold text-gray-600">Joined Date</th>
+                <th className="text-right px-5 py-3 font-semibold text-gray-600">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -47,7 +50,9 @@ export default async function StudentsPage() {
                         {student.name.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900">{student.name}</p>
+                        <Link href={`/admin/students/${student.id}`} className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors">
+                          {student.name}
+                        </Link>
                         <p className="text-xs text-gray-500">{student.email}</p>
                       </div>
                     </div>
@@ -66,6 +71,17 @@ export default async function StudentsPage() {
                   </td>
                   <td className="px-5 py-4 text-gray-500 text-xs">
                     {formatDate(student.createdAt)}
+                  </td>
+                  <td className="px-5 py-4">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link 
+                        href={`/admin/students/${student.id}`}
+                        className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        View Profile
+                      </Link>
+                      <ResetPasswordButton userId={student.id} studentName={student.name} />
+                    </div>
                   </td>
                 </tr>
               ))}

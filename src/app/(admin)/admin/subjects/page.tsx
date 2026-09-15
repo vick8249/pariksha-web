@@ -1,6 +1,6 @@
 import { db } from '@/lib/db'
 import Link from 'next/link'
-import { Plus, Edit, Tag } from 'lucide-react'
+import { Plus, Tag } from 'lucide-react'
 import { DeleteButton } from '@/components/admin/DeleteButton'
 import { deleteSubject } from './actions'
 
@@ -52,6 +52,12 @@ export default async function SubjectsPage() {
                   <td className="px-5 py-4 text-gray-600">{sub._count.exams}</td>
                   <td className="px-5 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
+                      <Link
+                        href={`/admin/subjects/${sub.id}/edit`}
+                        className="flex items-center gap-1 text-xs font-medium text-indigo-600 hover:text-indigo-700 border border-indigo-200 hover:border-indigo-400 px-3 py-1.5 rounded-lg transition-colors"
+                      >
+                        Edit
+                      </Link>
                       <DeleteButton id={sub.id} action={deleteSubject} confirmMessage="Delete this subject?" />
                     </div>
                   </td>

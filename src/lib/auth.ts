@@ -1,7 +1,6 @@
 import 'server-only'
-import bcrypt from 'bcryptjs'
 import { db } from '@/lib/db'
-import { createSession, deleteSession, getSession } from '@/lib/session'
+import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
@@ -35,7 +34,7 @@ export const AdminLoginSchema = z.object({
 // ─────────────────────────────────────────
 
 export type AuthFormState =
-  | { errors?: Record<string, string[]>; message?: string }
+  | { errors?: Record<string, string[]>; message?: string; success?: boolean; redirectTo?: string }
   | undefined
 
 export async function getCurrentUser() {

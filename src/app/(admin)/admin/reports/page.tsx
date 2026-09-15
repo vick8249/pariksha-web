@@ -1,6 +1,7 @@
 import { db } from '@/lib/db'
 import { FileText, CheckCircle, XCircle } from 'lucide-react'
 import { formatDate, formatTime, getGrade } from '@/lib/utils'
+import Link from 'next/link'
 
 export const metadata = { title: 'Reports' }
 
@@ -70,6 +71,7 @@ export default async function ReportsPage() {
                 <th className="text-center px-5 py-3 font-semibold text-gray-600">Percentage</th>
                 <th className="text-center px-5 py-3 font-semibold text-gray-600">Time Taken</th>
                 <th className="text-left px-5 py-3 font-semibold text-gray-600">Date</th>
+                <th className="text-right px-5 py-3 font-semibold text-gray-600">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -101,13 +103,21 @@ export default async function ReportsPage() {
                       {attempt.score} / {attempt.exam.totalMarks}
                     </td>
                     <td className="px-5 py-4 text-center font-bold">
-                      <span className={grade.color}>{attempt.percentage}%</span>
+                      <span className={grade.color}>{Math.round(attempt.percentage)}%</span>
                     </td>
                     <td className="px-5 py-4 text-center text-gray-600 font-mono text-xs">
                       {attempt.timeTaken ? formatTime(attempt.timeTaken) : '--:--'}
                     </td>
                     <td className="px-5 py-4 text-gray-500 text-xs">
                       {attempt.submittedAt ? formatDate(attempt.submittedAt) : 'Unknown'}
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <Link 
+                        href={`/admin/reports/${attempt.id}`}
+                        className="text-indigo-600 hover:text-indigo-900 text-sm font-semibold hover:underline"
+                      >
+                        View Details
+                      </Link>
                     </td>
                   </tr>
                 )

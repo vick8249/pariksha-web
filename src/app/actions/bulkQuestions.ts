@@ -4,7 +4,18 @@ import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth'
 import { revalidatePath } from 'next/cache'
 
-export async function bulkCreateQuestions(examId: string, questionsData: any[]) {
+type QuestionInput = {
+  text: string
+  optionA: string
+  optionB: string
+  optionC: string
+  optionD: string
+  correctOption: string
+  explanation?: string
+  marks?: number
+}
+
+export async function bulkCreateQuestions(examId: string, questionsData: QuestionInput[]) {
   try {
     await requireAdmin()
 
@@ -28,7 +39,7 @@ export async function bulkCreateQuestions(examId: string, questionsData: any[]) 
         optionB: q.optionB,
         optionC: q.optionC,
         optionD: q.optionD,
-        correctOption: q.correctOption,
+        correctOption: q.correctOption as 'A' | 'B' | 'C' | 'D',
         explanation: q.explanation || null,
         marks: q.marks || 1,
         order: currentOrder
@@ -46,8 +57,9 @@ export async function bulkCreateQuestions(examId: string, questionsData: any[]) 
 
     revalidatePath(`/admin/exams/${examId}/questions`)
     return { success: true }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Bulk upload error:', error)
-    return { error: error.message || 'Failed to upload questions' }
+    return { error: error instanceof Error ? error.message : 'Failed to upload questions' }
   }
 }
+

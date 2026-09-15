@@ -1,13 +1,15 @@
 'use client'
 
 import { useActionState } from 'react'
-import { login } from '@/app/actions/auth'
+import { adminLogin } from '@/app/actions/auth'
 import { ShieldCheck, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function AdminLoginPage() {
-  const [state, action, pending] = useActionState(login, undefined)
+  const [state, action, pending] = useActionState(adminLogin, undefined)
   const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
@@ -76,8 +78,16 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
+
+          <p className="text-center text-xs text-gray-500 mt-5">
+            Are you a student?{' '}
+            <a href="/auth/login" className="text-indigo-400 hover:underline">
+              Student login →
+            </a>
+          </p>
         </div>
       </div>
     </div>
   )
 }
+

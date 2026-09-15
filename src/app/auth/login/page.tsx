@@ -4,7 +4,8 @@ import { useActionState } from 'react'
 import { login } from '@/app/actions/auth'
 import Link from 'next/link'
 import { BookOpen, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [state, action, pending] = useActionState(login, undefined)
@@ -58,9 +59,6 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <Link href="/auth/forgot-password" className="text-xs text-indigo-600 hover:underline">
-                  Forgot password?
-                </Link>
               </div>
               <div className="relative">
                 <input

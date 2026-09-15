@@ -1,9 +1,21 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { Upload, FileText, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { Upload, AlertCircle, CheckCircle2 } from 'lucide-react'
 import Papa from 'papaparse'
 import { bulkCreateQuestions } from '@/app/actions/bulkQuestions'
+
+// ─── Types ───────────────────────────────
+type CsvRow = {
+  text?: string
+  optionA?: string; OptionA?: string
+  optionB?: string; OptionB?: string
+  optionC?: string; OptionC?: string
+  optionD?: string; OptionD?: string
+  correctOption?: string; CorrectOption?: string
+  explanation?: string; Explanation?: string
+  marks?: string | number; Marks?: string | number
+}
 
 export function BulkUploadQuestions({ examId }: { examId: string }) {
   const [isUploading, setIsUploading] = useState(false)
@@ -15,49 +27,66 @@ export function BulkUploadQuestions({ examId }: { examId: string }) {
     const file = e.target.files?.[0]
     if (!file) return
 
+    // Validate file type upfront — reject Excel, only allow CSV
+    const fileName = file.name.toLowerCase()
+    if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+      setError('Please export your Excel file as CSV first. Go to File → Save As → CSV (Comma delimited) in Excel.')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      return
+    }
+    if (!fileName.endsWith('.csv') && file.type !== 'text/csv' && file.type !== 'text/plain') {
+      setError('Invalid file type. Please upload a .csv file only.')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      return
+    }
+
     setIsUploading(true)
     setError(null)
     setSuccessCount(null)
 
-    Papa.parse(file, {
+    Papa.parse<CsvRow>(file, {
       header: true,
       skipEmptyLines: true,
       complete: async (results) => {
         try {
-          const rows = results.data as any[]
-          
+          const rows = results.data
+
           // Validate basic structure
-          if (rows.length === 0) throw new Error("The CSV file is empty.")
+          if (rows.length === 0) throw new Error('The CSV file is empty.')
           if (!rows[0].text || !rows[0].correctOption) {
             throw new Error("Invalid CSV format. Missing required columns: 'text' or 'correctOption'.")
           }
 
           // Format for server
           const questions = rows.map((row, i) => ({
-            text: String(row.text || '').trim(),
-            optionA: String(row.optionA || row.OptionA || '').trim(),
-            optionB: String(row.optionB || row.OptionB || '').trim(),
-            optionC: String(row.optionC || row.OptionC || '').trim(),
-            optionD: String(row.optionD || row.OptionD || '').trim(),
-            correctOption: String(row.correctOption || row.CorrectOption || '').toUpperCase().trim(),
-            explanation: String(row.explanation || row.Explanation || '').trim(),
-            marks: Number(row.marks || row.Marks) || 1,
+            _rowNum: i + 1,
+            text: String(row.text ?? '').trim(),
+            optionA: String(row.optionA ?? row.OptionA ?? '').trim(),
+            optionB: String(row.optionB ?? row.OptionB ?? '').trim(),
+            optionC: String(row.optionC ?? row.OptionC ?? '').trim(),
+            optionD: String(row.optionD ?? row.OptionD ?? '').trim(),
+            correctOption: String(row.correctOption ?? row.CorrectOption ?? '').toUpperCase().trim(),
+            explanation: String(row.explanation ?? row.Explanation ?? '').trim(),
+            marks: Number(row.marks ?? row.Marks) || 1,
           }))
 
           // Basic Validation
-          questions.forEach((q, i) => {
-            if (!q.text) throw new Error(`Row ${i + 1}: Missing question text`)
-            if (!['A', 'B', 'C', 'D'].includes(q.correctOption)) {
-              throw new Error(`Row ${i + 1}: Correct option must be A, B, C, or D. Found: ${q.correctOption}`)
+          questions.forEach(({ _rowNum, text, correctOption }) => {
+            if (!text) throw new Error(`Row ${_rowNum}: Missing question text`)
+            if (!['A', 'B', 'C', 'D'].includes(correctOption)) {
+              throw new Error(`Row ${_rowNum}: Correct option must be A, B, C, or D. Found: ${correctOption}`)
             }
           })
 
-          const res = await bulkCreateQuestions(examId, questions)
+          // Strip internal helper field before sending to server
+          const payload = questions.map(({ _rowNum, ...q }) => { void _rowNum; return q })
+
+          const res = await bulkCreateQuestions(examId, payload)
           if (res.error) throw new Error(res.error)
-          
+
           setSuccessCount(questions.length)
-        } catch (err: any) {
-          setError(err.message || "Failed to process the CSV file.")
+        } catch (err: unknown) {
+          setError(err instanceof Error ? err.message : 'Failed to process the CSV file.')
         } finally {
           setIsUploading(false)
           if (fileInputRef.current) fileInputRef.current.value = ''
@@ -66,7 +95,7 @@ export function BulkUploadQuestions({ examId }: { examId: string }) {
       error: (err) => {
         setError(err.message)
         setIsUploading(false)
-      }
+      },
     })
   }
 

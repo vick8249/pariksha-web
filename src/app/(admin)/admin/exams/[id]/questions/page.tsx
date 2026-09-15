@@ -57,7 +57,7 @@ export default async function ExamQuestionsPage({
         {exam.questions.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-200 py-20 text-center">
             <p className="font-medium text-gray-500">No questions added yet.</p>
-            <p className="text-sm text-gray-400 mt-1">Click "Add Question" to build this exam.</p>
+            <p className="text-sm text-gray-400 mt-1">Click {'\''}Add Question{'\''}  to build this exam.</p>
           </div>
         ) : (
           exam.questions.map((q, index) => (
@@ -75,7 +75,14 @@ export default async function ExamQuestionsPage({
                   <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
                     {q.marks} Mark{q.marks !== 1 ? 's' : ''}
                   </span>
-                  {/* Edit/Delete buttons (placeholders for Step 3) */}
+                  {/* Edit/Delete buttons */}
+                  <Link
+                    href={`/admin/exams/${exam.id}/questions/${q.id}/edit`}
+                    className="p-1.5 text-gray-400 hover:text-indigo-600 transition-colors"
+                    title="Edit question"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Link>
                   <DeleteButton 
                     id={q.id} 
                     action={deleteQuestion} 

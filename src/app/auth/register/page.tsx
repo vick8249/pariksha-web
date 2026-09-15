@@ -4,7 +4,8 @@ import { useActionState } from 'react'
 import { signup } from '@/app/actions/auth'
 import Link from 'next/link'
 import { BookOpen, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const CLASS_OPTIONS = [
   'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10',
@@ -15,6 +16,7 @@ const CLASS_OPTIONS = [
 export default function RegisterPage() {
   const [state, action, pending] = useActionState(signup, undefined)
   const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4">

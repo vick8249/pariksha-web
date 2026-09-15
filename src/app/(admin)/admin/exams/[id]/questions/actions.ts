@@ -81,3 +81,58 @@ export async function deleteQuestion(formData: FormData) {
   
   revalidatePath(`/admin/exams/${question.examId}/questions`)
 }
+
+export async function updateQuestion(formData: FormData) {
+  await requireAdmin()
+  const id = formData.get('id') as string
+
+  // Fetch old marks before updating so we can adjust the exam total
+  const existing = await db.question.findUnique({
+    where: { id },
+    select: { examId: true, marks: true }
+  })
+  if (!existing) return
+
+  const data = QuestionSchema.parse({
+    examId: existing.examId,
+    text: formData.get('text'),
+    imageUrl: formData.get('imageUrl') || undefined,
+    optionA: formData.get('optionA'),
+    optionB: formData.get('optionB'),
+    optionC: formData.get('optionC'),
+    optionD: formData.get('optionD'),
+    correctOption: formData.get('correctOption'),
+    explanation: formData.get('explanation') || undefined,
+    marks: formData.get('marks'),
+  })
+
+  const marksDelta = data.marks - existing.marks
+
+  await db.$transaction([
+    db.question.update({
+      where: { id },
+      data: {
+        text: data.text,
+        imageUrl: data.imageUrl ?? null,
+        optionA: data.optionA,
+        optionB: data.optionB,
+        optionC: data.optionC,
+        optionD: data.optionD,
+        correctOption: data.correctOption,
+        explanation: data.explanation ?? null,
+        marks: data.marks,
+      }
+    }),
+    // Only update totalMarks if marks actually changed
+    ...(marksDelta !== 0 ? [
+      db.exam.update({
+        where: { id: existing.examId },
+        data: { totalMarks: { increment: marksDelta } }
+      })
+    ] : [])
+  ])
+
+  revalidatePath(`/admin/exams/${existing.examId}/questions`)
+  redirect(`/admin/exams/${existing.examId}/questions`)
+}
+
