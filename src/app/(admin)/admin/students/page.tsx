@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { Users, GraduationCap } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import ResetPasswordButton from './ResetPasswordButton'
+import DeleteStudentButton from './DeleteStudentButton'
 import Link from 'next/link'
 
 export const metadata = { title: 'Students' }
@@ -43,44 +44,45 @@ export default async function StudentsPage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {students.map((student) => (
-                <tr key={student.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={student.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
+                      <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center text-indigo-700 dark:text-indigo-400 font-bold">
                         {student.name.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <Link href={`/admin/students/${student.id}`} className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors">
+                        <Link href={`/admin/students/${student.id}`} className="font-semibold text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                           {student.name}
                         </Link>
-                        <p className="text-xs text-gray-500">{student.email}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{student.email}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-gray-600">
+                  <td className="px-5 py-4 text-gray-600 dark:text-gray-400">
                     {student.class ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-100 text-gray-700 px-2 py-1 rounded-md">
+                      <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md">
                         <GraduationCap className="w-3 h-3" /> {student.class}
                       </span>
                     ) : (
-                      <span className="text-gray-400 text-xs">Not specified</span>
+                      <span className="text-gray-400 dark:text-gray-500 text-xs">Not specified</span>
                     )}
                   </td>
                   <td className="px-5 py-4 text-center">
-                    <span className="font-semibold text-gray-900">{student._count.attempts}</span>
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">{student._count.attempts}</span>
                   </td>
-                  <td className="px-5 py-4 text-gray-500 text-xs">
+                  <td className="px-5 py-4 text-gray-500 dark:text-gray-400 text-xs">
                     {formatDate(student.createdAt)}
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <Link 
                         href={`/admin/students/${student.id}`}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                       >
                         View Profile
                       </Link>
                       <ResetPasswordButton userId={student.id} studentName={student.name} />
+                      <DeleteStudentButton userId={student.id} studentName={student.name} />
                     </div>
                   </td>
                 </tr>
