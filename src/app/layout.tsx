@@ -29,6 +29,8 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
 
+import NextTopLoader from 'nextjs-toploader'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -39,6 +41,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 min-h-screen`}
       >
+        <NextTopLoader color="#4f46e5" showSpinner={false} height={3} shadow="0 0 10px #4f46e5,0 0 5px #4f46e5" />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
