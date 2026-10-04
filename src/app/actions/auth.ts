@@ -11,6 +11,7 @@ export async function signup(state: AuthFormState, formData: FormData): Promise<
   const validated = SignupSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
+    phone: formData.get('phone'),
     password: formData.get('password'),
     class: formData.get('class'),
   })
@@ -19,7 +20,7 @@ export async function signup(state: AuthFormState, formData: FormData): Promise<
     return { errors: validated.error.flatten().fieldErrors }
   }
 
-  const { name, email, password, class: studentClass } = validated.data
+  const { name, email, phone, password, class: studentClass } = validated.data
 
   const existing = await db.user.findUnique({ where: { email } })
   if (existing) {
@@ -29,7 +30,7 @@ export async function signup(state: AuthFormState, formData: FormData): Promise<
   const hashedPassword = await bcrypt.hash(password, 12)
 
   const user = await db.user.create({
-    data: { name, email, password: hashedPassword, role: 'STUDENT', class: studentClass },
+    data: { name, email, phone, password: hashedPassword, role: 'STUDENT', class: studentClass },
   })
 
   await createSession({

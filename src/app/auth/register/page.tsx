@@ -78,6 +78,25 @@ export default function RegisterPage() {
               )}
             </div>
 
+            {/* Phone */}
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1.5">
+                Contact No.
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                required
+                placeholder="10-digit mobile number"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+              />
+              {state?.errors?.phone && (
+                <p className="text-red-500 text-xs mt-1">{state.errors.phone[0]}</p>
+              )}
+            </div>
+
             {/* Class */}
             <div>
               <label htmlFor="class" className="block text-sm font-medium text-gray-700 mb-1.5">

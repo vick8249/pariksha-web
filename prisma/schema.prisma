@@ -13,6 +13,7 @@ model User {
   name      String
   email     String    @unique
   password  String
+  phone     String?
   role      Role      @default(STUDENT)
   class     String?
   language  String    @default("en")

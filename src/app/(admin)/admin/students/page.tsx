@@ -1,5 +1,5 @@
 import { db } from '@/lib/db'
-import { Users, GraduationCap } from 'lucide-react'
+import { Users, GraduationCap, Download, Phone } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import ResetPasswordButton from './ResetPasswordButton'
 import DeleteStudentButton from './DeleteStudentButton'
@@ -23,6 +23,15 @@ export default async function StudentsPage() {
           <h1 className="text-2xl font-extrabold text-gray-900">Students ({students.length})</h1>
           <p className="text-gray-500 mt-1 text-sm">View registered students and manage their access</p>
         </div>
+        {students.length > 0 && (
+          <a
+            href="/api/admin/students/export"
+            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </a>
+        )}
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
@@ -36,6 +45,7 @@ export default async function StudentsPage() {
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="text-left px-5 py-3 font-semibold text-gray-600">Student Info</th>
+                <th className="text-left px-5 py-3 font-semibold text-gray-600">Contact No.</th>
                 <th className="text-left px-5 py-3 font-semibold text-gray-600">Class</th>
                 <th className="text-center px-5 py-3 font-semibold text-gray-600">Total Exams Taken</th>
                 <th className="text-left px-5 py-3 font-semibold text-gray-600">Joined Date</th>
@@ -57,6 +67,15 @@ export default async function StudentsPage() {
                         <p className="text-xs text-gray-500 dark:text-gray-400">{student.email}</p>
                       </div>
                     </div>
+                  </td>
+                  <td className="px-5 py-4 text-gray-600 dark:text-gray-400">
+                    {student.phone ? (
+                      <span className="inline-flex items-center gap-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+                        <Phone className="w-3 h-3" /> {student.phone}
+                      </span>
+                    ) : (
+                      <span className="text-gray-400 dark:text-gray-500 text-xs">—</span>
+                    )}
                   </td>
                   <td className="px-5 py-4 text-gray-600 dark:text-gray-400">
                     {student.class ? (
@@ -94,3 +113,4 @@ export default async function StudentsPage() {
     </div>
   )
 }
+
