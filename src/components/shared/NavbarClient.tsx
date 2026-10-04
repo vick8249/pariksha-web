@@ -103,30 +103,30 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-10 text-base font-extrabold text-gray-700">
+            <nav className="hidden lg:flex items-center gap-8 text-base font-extrabold text-gray-700">
               <Link href="/" className="hover:text-indigo-600 hover:scale-105 transition-all">{t.home}</Link>
-              <Link href="/exams" className="hover:text-indigo-600 hover:scale-105 transition-all">{t.exams}</Link>
+              <Link href="/exams" className="hover:text-indigo-600 hover:scale-105 transition-all whitespace-nowrap">{t.exams}</Link>
               <Link href="/categories" className="hover:text-indigo-600 hover:scale-105 transition-all">{t.categories}</Link>
-              <Link href="/daily-streak" className="text-amber-500 hover:text-amber-600 hover:scale-105 transition-all flex items-center gap-1.5">
-                🔥 Daily Streak
-              </Link>
-              <Link href="/scholarships" className="hover:text-amber-600 hover:scale-105 transition-all flex items-center gap-1.5">
+              <Link href="/scholarships" className="hover:text-amber-600 hover:scale-105 transition-all flex items-center gap-1.5 whitespace-nowrap">
                 Scholarships
                 <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-[10px] uppercase px-2 py-0.5 rounded-full font-black tracking-wider animate-pulse shadow-sm">New</span>
               </Link>
             </nav>
 
             {/* Desktop Auth + Language */}
-            <div className="hidden md:flex items-center gap-5">
+            <div className="hidden md:flex items-center gap-4">
               <LanguageDropdown lang={lang} setLang={setLang} />
               {session ? (
-                <div className="flex items-center gap-5">
-                  <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full shadow-sm text-amber-700 font-black cursor-pointer hover:bg-amber-100 transition-colors" title="Your Total Stars">
-                    ⭐ {stars}
+                <div className="flex items-center gap-4">
+                  {/* Premium Star Pill */}
+                  <div className="flex items-center gap-1.5 bg-gradient-to-b from-amber-50 to-amber-100 border border-amber-300/60 px-3 py-1.5 rounded-full shadow-sm text-amber-700 font-black cursor-pointer hover:shadow-md hover:scale-105 transition-all" title="Your Total Stars">
+                    <span className="text-amber-500 drop-shadow-sm text-lg leading-none">★</span>
+                    <span className="text-sm">{stars}</span>
                   </div>
-                  <Link href={session.role === 'ADMIN' || session.role === 'SUPER_ADMIN' ? '/admin' : '/dashboard'} className="flex items-center gap-2 text-base font-extrabold transition-all hover:scale-105 text-gray-800 hover:text-indigo-600">
-                    <LayoutDashboard className="w-5 h-5" />
-                    {session.role === 'ADMIN' || session.role === 'SUPER_ADMIN' ? 'Admin Dashboard' : t.dashboard}
+                  
+                  <Link href={session.role === 'ADMIN' || session.role === 'SUPER_ADMIN' ? '/admin' : '/dashboard'} className="flex items-center gap-2 text-sm font-extrabold transition-all hover:scale-105 text-gray-800 hover:text-indigo-600 whitespace-nowrap bg-gray-50 border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-100">
+                    <LayoutDashboard className="w-4 h-4" />
+                    {session.role === 'ADMIN' || session.role === 'SUPER_ADMIN' ? 'Admin' : t.dashboard}
                   </Link>
                   <div className="w-px h-8 bg-gray-300" />
                   <div className="flex items-center gap-2 text-base">
@@ -174,9 +174,7 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
               <Link href="/" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.home}</Link>
               <Link href="/exams" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.exams}</Link>
               <Link href="/categories" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.categories}</Link>
-              <Link href="/daily-streak" onClick={() => setMobileOpen(false)} className="py-3 flex items-center justify-between text-amber-500 transition-colors border-b border-gray-100">
-                <span>🔥 Daily Streak</span>
-              </Link>
+              
               <Link href="/scholarships" onClick={() => setMobileOpen(false)} className="py-3 flex items-center justify-between text-amber-600 transition-colors">
                 <span>Scholarships</span>
                 <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs uppercase px-2 py-0.5 rounded-full font-black tracking-wider animate-pulse shadow-sm">New</span>
@@ -212,3 +210,4 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
     </div>
   )
 }
+
