@@ -197,11 +197,13 @@ export default async function CertificatePage({
             </div>
 
             {/* Footer: date + signature line */}
-            <div className="flex-shrink-0 w-full flex items-end justify-between px-[2cqw]">
-              <div className="text-center pb-[1cqw]">
-                <div className="w-[12cqw] h-[0.2cqw] bg-gray-300 mb-[1cqw] mx-auto" />
-                <p className="text-[1.2cqw] text-gray-500 font-medium">Date of Completion</p>
-                <p className="text-[1.4cqw] font-bold text-gray-800 mt-[0.4cqw]">{completionDate}</p>
+            <div className="flex-shrink-0 w-full flex items-end justify-between px-[4cqw]">
+              
+              {/* Date */}
+              <div className="text-center pb-[1cqw] flex flex-col items-center justify-end h-[10cqw]">
+                <p className="text-[1.6cqw] font-bold text-gray-800 mb-[0.5cqw]">{completionDate}</p>
+                <div className="w-[12cqw] h-[0.15cqw] bg-gray-400 mb-[0.5cqw]" />
+                <p className="text-[1.1cqw] text-gray-500 font-bold uppercase tracking-[0.1em]">Date</p>
               </div>
 
               {/* Seal */}
@@ -215,11 +217,19 @@ export default async function CertificatePage({
                 />
               </div>
 
-              <div className="text-center pb-[1cqw]">
-                <div className="w-[12cqw] h-[0.2cqw] bg-gray-300 mb-[1cqw] mx-auto" />
-                <p className="text-[1.2cqw] text-gray-500 font-medium">Authorised Signature</p>
-                <p className="text-[3cqw] font-bold text-gray-800 mt-[0.2cqw] -mb-[1cqw]" style={{ fontFamily: "'Dancing Script', cursive", transform: "rotate(-3deg)" }}>P. Mandal</p>
+              {/* Signature */}
+              <div className="text-center pb-[1cqw] flex flex-col items-center justify-end h-[10cqw]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src="/signature.png" 
+                  alt="Signature" 
+                  className="h-[7cqw] w-auto object-contain mix-blend-multiply opacity-95 -mb-[1.5cqw] relative z-0" 
+                  style={{ transform: "rotate(-2deg)" }} 
+                />
+                <div className="w-[12cqw] h-[0.15cqw] bg-gray-400 mb-[0.5cqw] relative z-10" />
+                <p className="text-[1.1cqw] text-gray-500 font-bold uppercase tracking-[0.1em]">Authorised Signature</p>
               </div>
+              
             </div>
           </div>
         </div>
