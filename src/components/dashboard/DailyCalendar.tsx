@@ -58,8 +58,8 @@ export function DailyCalendar({ exams, completedIds }: { exams: DailyExam[], com
 
       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
         {days.map((day, idx) => {
-          const dayName = day.toLocaleDateString('en-US', { weekday: 'short' })
-          const dayNum = day.getDate()
+          const dayName = day.date.toLocaleDateString('en-US', { weekday: 'short' })
+          const dayNum = day.date.getDate()
           
           if (!day.exam) {
             // No exam scheduled for this day
