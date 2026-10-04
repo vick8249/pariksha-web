@@ -15,16 +15,16 @@ export default function ScholarshipsPage() {
         <div className="text-center max-w-4xl mx-auto mb-20">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 border border-amber-200 text-amber-800 font-bold text-sm mb-6 shadow-sm">
             <Trophy className="w-4 h-4 text-amber-600" />
-            Coming Soon: Pariksha Tournaments
+            Coming Soon: Pariksha Scholarships
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tight mb-8">
-            Compete. Win.{' '}
+            Learn. Excel.{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">
-              Earn.
+              Succeed.
             </span>
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed mb-10 font-medium max-w-2xl mx-auto">
-            Welcome to the future of education. Pay a small entry fee, compete with the brightest minds across the country in live proctored exams, and win real cash scholarships.
+            Welcome to a platform that rewards academic excellence. Register for our upcoming scholarship exams, compete with the brightest minds across the country, and earn financial support for your education.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -54,9 +54,9 @@ export default function ScholarshipsPage() {
               <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-indigo-200">
                 <Target className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 relative z-10">1. Enroll & Pay</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 relative z-10">1. Register & Prepare</h3>
               <p className="text-gray-600 leading-relaxed relative z-10">
-                Choose a scholarship exam matching your syllabus. Pay a small entry fee securely using UPI, Cards, or Net Banking.
+                Choose a scholarship exam matching your syllabus. Complete the registration securely to confirm your seat and start preparing.
               </p>
             </div>
 
@@ -65,9 +65,9 @@ export default function ScholarshipsPage() {
               <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-amber-200">
                 <Zap className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 relative z-10">2. Compete Live</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 relative z-10">2. Take the Test</h3>
               <p className="text-gray-600 leading-relaxed relative z-10">
-                Take the exam in our strict Anti-Cheat environment. No tab-switching, full-screen enforced. Pure merit.
+                Attempt the test in our strict, secure environment. Show your true potential without distractions. Pure merit and hard work.
               </p>
             </div>
 
@@ -76,9 +76,9 @@ export default function ScholarshipsPage() {
               <div className="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-emerald-200">
                 <Award className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 relative z-10">3. Win Real Money</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 relative z-10">3. Earn Rewards</h3>
               <p className="text-gray-600 leading-relaxed relative z-10">
-                Top rankers take home the massive prize pool. The money is transferred instantly to your bank account.
+                Top performers are rewarded with merit-based scholarships and certificates of excellence to support their educational journey.
               </p>
             </div>
 
@@ -90,13 +90,13 @@ export default function ScholarshipsPage() {
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-500/20 to-transparent pointer-events-none" />
           <div className="relative z-10 md:w-2/3">
             <div className="flex items-center gap-2 text-indigo-400 font-bold mb-4 uppercase tracking-wider text-sm">
-              <ShieldCheck className="w-5 h-5" /> Enterprise Grade Security
+              <ShieldCheck className="w-5 h-5" /> Academic Integrity First
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-6 leading-tight">
               100% Fair Play. <br /> Zero Tolerance for Cheating.
             </h2>
             <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-              When real money is on the line, trust is everything. Our upcoming tournament engine features AI-proctoring, full-screen enforcement, and tab-switch disqualification. May the best mind win.
+              When academic integrity is paramount, trust is everything. Our testing engine features strict proctoring, full-screen enforcement, and tab-switch disqualification. True talent always shines.
             </p>
             <div className="flex gap-4">
               <span className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700">Tab Monitoring</span>

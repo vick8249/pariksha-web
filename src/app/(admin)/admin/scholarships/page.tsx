@@ -44,8 +44,8 @@ export default async function ScholarshipsPage() {
                 <th className="px-6 py-4">Title</th>
                 <th className="px-6 py-4">Subject</th>
                 <th className="px-6 py-4">Questions</th>
-                <th className="px-6 py-4">Entry Fee</th>
-                <th className="px-6 py-4">Prize Pool</th>
+                <th className="px-6 py-4">Registration Fee</th>
+                <th className="px-6 py-4">Scholarship Fund</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>

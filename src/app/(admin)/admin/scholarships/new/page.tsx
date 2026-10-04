@@ -106,18 +106,18 @@ export default async function NewExamPage() {
 
           <hr className="border-gray-100" />
 
-          {/* Premium / Tournament Section */}
+          {/* Premium / Scholarship Section */}
           <div className="bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-4">
             <div className="flex items-center gap-3 mb-2">
               <input type="hidden" name="isPremium" value="on" />
               <div className="w-5 h-5 rounded-full bg-amber-500 flex items-center justify-center text-white text-xs font-bold">✓</div>
-              <label className="text-base font-bold text-amber-900">This is a Scholarship Tournament</label>
+              <label className="text-base font-bold text-amber-900">This is a Premium Scholarship</label>
             </div>
-            <p className="text-xs text-amber-700 ml-8 mb-4">You are creating a premium exam. Students will see this as a paid tournament.</p>
+            <p className="text-xs text-amber-700 ml-8 mb-4">You are creating a premium exam. Students will see this as a paid scholarship test.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ml-8">
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-1.5">Entry Fee (₹)</label>
+                <label className="block text-sm font-medium text-amber-900 mb-1.5">Registration Fee (₹)</label>
                 <input
                   name="entryFee"
                   type="number"
@@ -126,7 +126,7 @@ export default async function NewExamPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-1.5">Prize Pool (₹)</label>
+                <label className="block text-sm font-medium text-amber-900 mb-1.5">Total Scholarship Fund (₹)</label>
                 <input
                   name="prizePool"
                   type="number"
@@ -135,7 +135,7 @@ export default async function NewExamPage() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-amber-900 mb-1.5">Tournament Rules (Manual Payment Instructions)</label>
+                <label className="block text-sm font-medium text-amber-900 mb-1.5">Scholarship Guidelines (Manual Payment Instructions)</label>
                 <textarea
                   name="tournamentRules"
                   rows={3}
