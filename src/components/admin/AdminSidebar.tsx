@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, BookOpen, FolderOpen, Tag, Users,
-  BarChart3, LogOut, Settings, ChevronRight, GraduationCap, HelpCircle, Globe, ShieldCheck
+  BarChart3, LogOut, Settings, ChevronRight, GraduationCap, HelpCircle, Globe, ShieldCheck, Trophy
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { logout } from '@/app/actions/auth'
@@ -14,7 +14,8 @@ const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, exact: true },
   { label: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { label: 'Subjects', href: '/admin/subjects', icon: Tag },
-  { label: 'Exams', href: '/admin/exams', icon: BookOpen },
+  { label: 'Free Exams', href: '/admin/exams', icon: BookOpen },
+  { label: 'Scholarships', href: '/admin/scholarships', icon: Trophy },
   { label: 'Students', href: '/admin/students', icon: Users },
   { label: 'Reports', href: '/admin/reports', icon: BarChart3 },
   { label: 'Platform Guide', href: '/admin/guide', icon: HelpCircle },

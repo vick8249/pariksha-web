@@ -89,6 +89,7 @@ export default async function CertificatePage({
           style={{ aspectRatio: '1.414 / 1' }}
         >
           <style dangerouslySetInnerHTML={{ __html: `
+            @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
             @media print {
               @page {
                 size: A4 landscape;
@@ -220,7 +221,7 @@ export default async function CertificatePage({
               <div className="text-center pb-[1cqw]">
                 <div className="w-[12cqw] h-[0.2cqw] bg-gray-300 mb-[1cqw] mx-auto" />
                 <p className="text-[1.2cqw] text-gray-500 font-medium">Authorised Signature</p>
-                <p className="text-[1.4cqw] font-bold text-gray-800 mt-[0.4cqw]">Pariksha Mandal</p>
+                <p className="text-[3cqw] font-bold text-gray-800 mt-[0.2cqw] -mb-[1cqw]" style={{ fontFamily: "'Dancing Script', cursive", transform: "rotate(-3deg)" }}>P. Mandal</p>
               </div>
             </div>
           </div>

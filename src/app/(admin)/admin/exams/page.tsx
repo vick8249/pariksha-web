@@ -8,6 +8,7 @@ export const metadata = { title: 'Manage Exams' }
 
 export default async function ExamsPage() {
   const exams = await db.exam.findMany({
+    where: { isPremium: false },
     include: { subject: { include: { category: true } }, _count: { select: { questions: true } } },
     orderBy: { createdAt: 'desc' }
   })
