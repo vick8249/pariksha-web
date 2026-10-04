@@ -287,13 +287,22 @@ export default function ExamInterface({
               >
                 <ChevronLeft className="w-4 h-4" /> Prev
               </button>
-              <button
-                onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
-                disabled={currentIdx === totalQuestions - 1}
-                className="flex items-center gap-1 text-sm text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-30 px-3 py-1.5 rounded-lg transition-colors"
-              >
-                Next <ChevronRight className="w-4 h-4" />
-              </button>
+              
+              {currentIdx === totalQuestions - 1 ? (
+                <button
+                  onClick={() => setShowConfirm(true)}
+                  className="flex items-center gap-1 text-sm text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-lg transition-colors font-semibold shadow-sm"
+                >
+                  Submit Exam
+                </button>
+              ) : (
+                <button
+                  onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
+                  className="flex items-center gap-1 text-sm text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-1.5 rounded-lg transition-colors font-semibold shadow-sm"
+                >
+                  Next <ChevronRight className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
         </div>
