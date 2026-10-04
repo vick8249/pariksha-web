@@ -90,6 +90,13 @@ model Exam {
   isPublished      Boolean    @default(false)
   instructions     String?
   order            Int        @default(0)
+  
+  // Tournament & Premium Fields
+  isPremium        Boolean    @default(false)
+  entryFee         Int?       // In whole Rupees (INR)
+  prizePool        Int?       // Total prize money
+  tournamentRules  String?    @db.Text
+
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   attempts         Attempt[]

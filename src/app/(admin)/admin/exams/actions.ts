@@ -17,6 +17,10 @@ const ExamSchema = z.object({
   shuffleQuestions: z.boolean().default(false),
   isPublished: z.boolean().default(false),
   instructions: z.string().optional(),
+  isPremium: z.boolean().default(false),
+  entryFee: z.coerce.number().optional(),
+  prizePool: z.coerce.number().optional(),
+  tournamentRules: z.string().optional(),
 })
 
 export async function createExam(formData: FormData) {
@@ -32,6 +36,10 @@ export async function createExam(formData: FormData) {
     shuffleQuestions: formData.get('shuffleQuestions') === 'on',
     isPublished: formData.get('isPublished') === 'on',
     instructions: formData.get('instructions') || undefined,
+    isPremium: formData.get('isPremium') === 'on',
+    entryFee: formData.get('entryFee') || undefined,
+    prizePool: formData.get('prizePool') || undefined,
+    tournamentRules: formData.get('tournamentRules') || undefined,
   })
 
   // Start with 0 marks, questions will add to it
@@ -55,6 +63,10 @@ export async function updateExam(formData: FormData) {
     shuffleQuestions: formData.get('shuffleQuestions') === 'on',
     isPublished: formData.get('isPublished') === 'on',
     instructions: formData.get('instructions') || undefined,
+    isPremium: formData.get('isPremium') === 'on',
+    entryFee: formData.get('entryFee') || undefined,
+    prizePool: formData.get('prizePool') || undefined,
+    tournamentRules: formData.get('tournamentRules') || undefined,
   })
 
   await db.exam.update({ where: { id }, data })

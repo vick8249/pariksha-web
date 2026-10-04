@@ -106,6 +106,47 @@ export default async function NewExamPage() {
 
           <hr className="border-gray-100" />
 
+          {/* Premium / Tournament Section */}
+          <div className="bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-4">
+            <div className="flex items-center gap-3 mb-2">
+              <input type="checkbox" id="isPremium" name="isPremium" className="w-5 h-5 rounded text-amber-600 focus:ring-amber-500 border-amber-300" />
+              <label htmlFor="isPremium" className="text-base font-bold text-amber-900">Make this a Premium / Tournament Exam</label>
+            </div>
+            <p className="text-xs text-amber-700 ml-8 mb-4">Checking this will require students to pay an entry fee to take this exam.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ml-8">
+              <div>
+                <label className="block text-sm font-medium text-amber-900 mb-1.5">Entry Fee (₹)</label>
+                <input
+                  name="entryFee"
+                  type="number"
+                  placeholder="e.g. 50"
+                  className="w-full px-4 py-2.5 rounded-xl border border-amber-300 text-sm focus:ring-2 focus:ring-amber-500 bg-white"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-amber-900 mb-1.5">Prize Pool (₹)</label>
+                <input
+                  name="prizePool"
+                  type="number"
+                  placeholder="e.g. 5000"
+                  className="w-full px-4 py-2.5 rounded-xl border border-amber-300 text-sm focus:ring-2 focus:ring-amber-500 bg-white"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-amber-900 mb-1.5">Tournament Rules</label>
+                <textarea
+                  name="tournamentRules"
+                  rows={2}
+                  placeholder="e.g. Top 3 scorers win. Must not switch tabs."
+                  className="w-full px-4 py-2.5 rounded-xl border border-amber-300 text-sm focus:ring-2 focus:ring-amber-500 bg-white"
+                />
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-gray-100" />
+
           {/* Toggles */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
