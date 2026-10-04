@@ -25,10 +25,8 @@ export default async function CertificatePage({
     },
   })
 
-  // Only show certificate for completed, passing attempts
+  // Only show certificate for completed attempts
   if (!attempt) notFound()
-  const passed = attempt.percentage >= attempt.exam.passingScore
-  if (!passed) notFound()
 
   const exam = attempt.exam
   const percentage = Math.round(attempt.percentage)
