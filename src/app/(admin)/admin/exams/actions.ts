@@ -21,6 +21,8 @@ const ExamSchema = z.object({
   entryFee: z.coerce.number().optional(),
   prizePool: z.coerce.number().optional(),
   tournamentRules: z.string().optional(),
+  isDaily: z.boolean().default(false),
+  scheduledDate: z.coerce.date().optional(),
 })
 
 export async function createExam(formData: FormData) {
@@ -40,6 +42,8 @@ export async function createExam(formData: FormData) {
     entryFee: formData.get('entryFee') || undefined,
     prizePool: formData.get('prizePool') || undefined,
     tournamentRules: formData.get('tournamentRules') || undefined,
+    isDaily: formData.get('isDaily') === 'on',
+    scheduledDate: formData.get('scheduledDate') || undefined,
   })
 
   // Start with 0 marks, questions will add to it
@@ -72,6 +76,8 @@ export async function updateExam(formData: FormData) {
     entryFee: formData.get('entryFee') || undefined,
     prizePool: formData.get('prizePool') || undefined,
     tournamentRules: formData.get('tournamentRules') || undefined,
+    isDaily: formData.get('isDaily') === 'on',
+    scheduledDate: formData.get('scheduledDate') || undefined,
   })
 
   const exam = await db.exam.update({ where: { id }, data })

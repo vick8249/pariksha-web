@@ -97,6 +97,10 @@ model Exam {
   prizePool        Int?       // Total prize money
   tournamentRules  String?    @db.Text
 
+  // Daily Practice Test Fields
+  isDaily          Boolean    @default(false)
+  scheduledDate    DateTime?
+
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   attempts         Attempt[]

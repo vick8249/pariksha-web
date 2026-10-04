@@ -3,6 +3,7 @@ import { requireAuth } from '@/lib/auth'
 import { logout } from '@/app/actions/auth'
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
+import { DailyCalendar } from '@/components/dashboard/DailyCalendar'
 import {
   BookOpen, Clock, Trophy, TrendingUp, User,
   CheckCircle, XCircle, ArrowRight, Calendar, Target,
@@ -76,11 +77,40 @@ export default async function DashboardPage() {
 
   const recommendedSlug = user?.class ? await getRecommendedCategorySlug(user.class) : null
 
+  // Fetch current week's daily exams
+  const today = new Date()
+  const currentDay = today.getDay()
+  const startOfWeek = new Date(today)
+  startOfWeek.setDate(today.getDate() - currentDay + (currentDay === 0 ? -6 : 1)) // Monday
+  startOfWeek.setHours(0, 0, 0, 0)
+  
+  const endOfWeek = new Date(startOfWeek)
+  endOfWeek.setDate(startOfWeek.getDate() + 6) // Sunday
+  endOfWeek.setHours(23, 59, 59, 999)
+
+  const dailyExams = await db.exam.findMany({
+    where: {
+      isDaily: true,
+      isPublished: true,
+      scheduledDate: {
+        gte: startOfWeek,
+        lte: endOfWeek
+      }
+    },
+    orderBy: { scheduledDate: 'asc' },
+    include: { subject: { include: { category: true } } }
+  })
+  
+  const completedExamIds = completedAttempts.map(a => a.examId)
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300 pt-28 pb-12">
-      {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="bg-gradient-to-r from-indigo-950 via-indigo-900 to-purple-900 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-950 rounded-3xl p-8 sm:p-10 text-white shadow-2xl relative overflow-hidden">
+        {/* Daily Challenges */}
+        <DailyCalendar exams={dailyExams} completedIds={completedExamIds} />
+
+      {/* Header */}
+        <div className="bg-gradient-to-r from-indigo-950 via-indigo-900 to-purple-900 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-950 rounded-3xl p-8 sm:p-10 text-white shadow-2xl relative overflow-hidden mb-8">
           {/* Decorative Elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500 opacity-20 rounded-full blur-2xl translate-y-1/3 -translate-x-1/4" />

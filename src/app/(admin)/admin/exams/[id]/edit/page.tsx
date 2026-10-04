@@ -62,6 +62,27 @@ export default async function EditExamPage({ params }: { params: Promise<{ id: s
             </div>
           </div>
 
+          <hr className="border-gray-100" />
+
+          {/* Daily Exam Section */}
+          <div className="bg-indigo-50 border border-indigo-100 p-5 rounded-2xl space-y-4">
+            <div className="flex items-center gap-3 mb-2">
+              <input type="checkbox" name="isDaily" id="isDaily" defaultChecked={exam.isDaily} className="w-5 h-5 rounded border-indigo-300 text-indigo-600 focus:ring-indigo-500" />
+              <label htmlFor="isDaily" className="text-base font-bold text-indigo-900">Mark as Daily Practice Test</label>
+            </div>
+            <p className="text-xs text-indigo-700 ml-8 mb-4">If checked, this exam will appear on the student dashboard as part of a 7-day calendar.</p>
+            
+            <div className="ml-8">
+              <label className="block text-sm font-medium text-indigo-900 mb-1.5">Scheduled Date</label>
+              <input
+                name="scheduledDate"
+                type="date"
+                defaultValue={exam.scheduledDate ? exam.scheduledDate.toISOString().split('T')[0] : ''}
+                className="w-full max-w-xs px-4 py-2.5 rounded-xl border border-indigo-200 text-sm focus:ring-2 focus:ring-indigo-500 bg-white"
+              />
+            </div>
+          </div>
+
           {exam.isPremium && (
             <>
               <hr className="border-gray-100" />
