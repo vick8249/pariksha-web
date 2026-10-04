@@ -205,17 +205,14 @@ export default async function CertificatePage({
               </div>
 
               {/* Seal */}
-              <div className="flex flex-col items-center">
-                <div className={`w-[9cqw] h-[9cqw] rounded-full border-[0.3cqw] ${theme.sealBorder} flex items-center justify-center shadow-md relative overflow-hidden`}>
-                  <div className={`absolute inset-[0.2cqw] border-[0.2cqw] border-dashed ${theme.sealInner} rounded-full animate-[spin_60s_linear_infinite] pointer-events-none`} />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/parikshalogo.png"
-                    alt="Seal"
-                    className="w-[5cqw] h-[5cqw] object-contain drop-shadow-sm z-10"
-                  />
-                </div>
-                <p className={`text-[1cqw] font-bold ${theme.sealText} mt-[0.8cqw] uppercase tracking-[0.2em]`}>Official Seal</p>
+              <div className="flex flex-col items-center justify-center -mt-[1.5cqw]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/seal.png"
+                  alt="Official Seal"
+                  className="w-[13cqw] h-[13cqw] object-contain drop-shadow-sm mix-blend-multiply opacity-95"
+                  style={{ transform: "rotate(-4deg)" }}
+                />
               </div>
 
               <div className="text-center pb-[1cqw]">
