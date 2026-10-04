@@ -73,13 +73,19 @@ export default function ExamInterface({
     if (submitting) return
     setSubmitting(true)
     try {
-      await fetch(`/api/attempts/${attemptId}/submit`, {
+      const res = await fetch(`/api/attempts/${attemptId}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers }),
       })
+      
+      if (!res.ok) {
+        throw new Error('Server returned an error')
+      }
+      
       router.push(`/exam/${examId}/result/${attemptId}`)
-    } catch {
+    } catch (err) {
+      alert("Failed to submit the exam. Please check your internet connection and try again. Your progress is saved.")
       setSubmitting(false)
     }
   }, [submitting, attemptId, answers, examId, router])
