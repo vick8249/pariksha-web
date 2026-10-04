@@ -66,8 +66,8 @@ export async function POST(
     score = Math.max(0, score)
     const percentage = attempt.totalMarks > 0 ? (score / attempt.totalMarks) * 100 : 0
 
-    // Upsert all answers + mark attempt as completed
-    await db.$transaction([
+    // Setup transaction array
+    const transactionOps: any[] = [
       ...answerRecords.map((ar) =>
         db.attemptAnswer.upsert({
           where: { attemptId_questionId: { attemptId: ar.attemptId, questionId: ar.questionId } },
@@ -95,7 +95,19 @@ export async function POST(
           timeTaken,
         },
       }),
-    ])
+    ]
+
+    // Award a star if it's a daily exam and they passed
+    if (exam.isDaily && percentage >= exam.passingScore) {
+      transactionOps.push(
+        db.user.update({
+          where: { id: session.userId },
+          data: { starsEarned: { increment: 1 } },
+        })
+      )
+    }
+
+    await db.$transaction(transactionOps)
 
     return NextResponse.json({ ok: true, score, percentage })
   } catch (error) {
