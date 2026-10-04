@@ -43,10 +43,15 @@ export async function createExam(formData: FormData) {
   })
 
   // Start with 0 marks, questions will add to it
-  await db.exam.create({ data: { ...data, totalMarks: 0 } })
+  const exam = await db.exam.create({ data: { ...data, totalMarks: 0 } })
   
-  revalidatePath('/admin/exams')
-  redirect('/admin/exams')
+  if (exam.isPremium) {
+    revalidatePath('/admin/scholarships')
+    redirect('/admin/scholarships')
+  } else {
+    revalidatePath('/admin/exams')
+    redirect('/admin/exams')
+  }
 }
 
 export async function updateExam(formData: FormData) {
@@ -69,10 +74,15 @@ export async function updateExam(formData: FormData) {
     tournamentRules: formData.get('tournamentRules') || undefined,
   })
 
-  await db.exam.update({ where: { id }, data })
+  const exam = await db.exam.update({ where: { id }, data })
   
-  revalidatePath('/admin/exams')
-  redirect('/admin/exams')
+  if (exam.isPremium) {
+    revalidatePath('/admin/scholarships')
+    redirect('/admin/scholarships')
+  } else {
+    revalidatePath('/admin/exams')
+    redirect('/admin/exams')
+  }
 }
 
 export async function deleteExam(formData: FormData) {

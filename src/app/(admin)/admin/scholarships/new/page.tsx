@@ -1,5 +1,5 @@
 import { db } from '@/lib/db'
-import { createExam } from '../actions'
+import { createExam } from '../../exams/actions'
 import Link from 'next/link'
 import { ChevronLeft, Info } from 'lucide-react'
 
