@@ -90,17 +90,18 @@ export default function ScholarshipsPage() {
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-500/20 to-transparent pointer-events-none" />
           <div className="relative z-10 md:w-2/3">
             <div className="flex items-center gap-2 text-indigo-400 font-bold mb-4 uppercase tracking-wider text-sm">
-              <ShieldCheck className="w-5 h-5" /> Academic Integrity First
+              <ShieldCheck className="w-5 h-5" /> Strict Examination Standards
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-6 leading-tight">
-              100% Fair Play. <br /> Zero Tolerance for Cheating.
+              Rigorous Evaluation. <br /> Absolute Academic Integrity.
             </h2>
             <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-              When academic integrity is paramount, trust is everything. Our testing engine features strict proctoring, full-screen enforcement, and tab-switch disqualification. True talent always shines.
+              To protect the value of every scholarship awarded, we implement institutional-grade security protocols. Our advanced testing environment automatically detects and prevents unauthorized browser activity, ensuring that true merit is accurately measured and rewarded.
             </p>
-            <div className="flex gap-4">
-              <span className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700">Tab Monitoring</span>
-              <span className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700">Copy-Paste Blocked</span>
+            <div className="flex flex-wrap gap-4">
+              <span className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700">Browser Lockdown Enforced</span>
+              <span className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700">Automated Malpractice Detection</span>
+              <span className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700">Strict Content Protection</span>
             </div>
           </div>
         </div>
