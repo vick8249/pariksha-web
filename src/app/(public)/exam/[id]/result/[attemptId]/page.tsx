@@ -113,16 +113,14 @@ export default async function ResultPage({
 
           {/* CTAs */}
           <div className="p-6 pt-0 space-y-3">
-            {/* Certificate button — only shown when passed */}
-            {passed && (
-              <Link
-                href={`/exam/${id}/result/${attemptId}/certificate`}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-white font-bold py-3 rounded-xl transition-all shadow-md hover:shadow-lg"
-              >
-                <Award className="w-5 h-5" />
-                Download / Print Certificate
-              </Link>
-            )}
+            {/* Certificate button - always available now */}
+            <Link
+              href={`/exam/${id}/result/${attemptId}/certificate`}
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-white font-bold py-3 rounded-xl transition-all shadow-md hover:shadow-lg"
+            >
+              <Award className="w-5 h-5" />
+              Download / Print Certificate
+            </Link>
             <Link
               href={`/exam/${id}/review/${attemptId}`}
               className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors"
