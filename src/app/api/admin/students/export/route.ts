@@ -9,16 +9,6 @@ export async function GET() {
     where: { role: 'STUDENT' },
     orderBy: { createdAt: 'desc' },
     include: { _count: { select: { attempts: true } } },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      class: true,
-      isActive: true,
-      createdAt: true,
-      _count: true,
-    },
   })
 
   const header = ['Name', 'Email', 'Contact No.', 'Class / Category', 'Total Exams Taken', 'Status', 'Joined Date']
