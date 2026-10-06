@@ -114,7 +114,7 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
             </nav>
 
             {/* Desktop Auth + Language */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-4">
               <LanguageDropdown lang={lang} setLang={setLang} />
               {session ? (
                 <div className="flex items-center gap-4">
@@ -154,7 +154,7 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
             </div>
 
             {/* Mobile: language + burger */}
-            <div className="md:hidden flex items-center gap-3">
+            <div className="lg:hidden flex items-center gap-3">
               <LanguageDropdown lang={lang} setLang={setLang} />
               <button
                 className="p-2.5 rounded-xl transition-colors shadow-sm bg-gray-100 text-gray-800 hover:bg-gray-200"
@@ -169,7 +169,7 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
 
         {/* Mobile Drawer */}
         {mobileOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl px-5 py-6 space-y-5 rounded-b-2xl shadow-2xl absolute w-full left-0">
+          <div className="lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl px-5 py-6 space-y-5 rounded-b-2xl shadow-2xl absolute w-full left-0">
             <nav className="flex flex-col gap-3 text-lg font-extrabold text-gray-800">
               <Link href="/" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.home}</Link>
               <Link href="/exams" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.exams}</Link>
@@ -184,7 +184,7 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
               {session ? (
                 <>
                   <div className="flex items-center gap-3 text-lg font-extrabold text-amber-600 py-2">
-                    ⭐ {stars} Total Stars
+                    <span className="text-amber-500 text-2xl leading-none">★</span> {stars} Total Stars
                   </div>
                   <Link href={session.role === 'ADMIN' || session.role === 'SUPER_ADMIN' ? '/admin' : '/dashboard'} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 text-lg font-extrabold text-gray-800 py-2">
                     <LayoutDashboard className="w-6 h-6" /> {session.role === 'ADMIN' || session.role === 'SUPER_ADMIN' ? 'Admin Dashboard' : t.dashboard}
