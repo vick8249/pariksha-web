@@ -106,10 +106,11 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
             <nav className="hidden lg:flex items-center gap-8 text-base font-extrabold text-gray-700">
               <Link href="/" className="hover:text-indigo-600 hover:scale-105 transition-all">{t.home}</Link>
               <Link href="/exams" className="hover:text-indigo-600 hover:scale-105 transition-all whitespace-nowrap">{t.exams}</Link>
-              <Link href="/categories" className="hover:text-indigo-600 hover:scale-105 transition-all">{t.categories}</Link>
               <Link href="/scholarships" className="hover:text-amber-600 hover:scale-105 transition-all flex items-center gap-1.5 whitespace-nowrap">
                 Scholarships
-                <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-[10px] uppercase px-2 py-0.5 rounded-full font-black tracking-wider animate-pulse shadow-sm">New</span>
+              </Link>
+              <Link href="/for-schools" className="hover:text-indigo-600 hover:scale-105 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                For Schools
               </Link>
             </nav>
 
@@ -173,11 +174,11 @@ export default function NavbarClient({ session, stars = 0 }: { session: NavbarSe
             <nav className="flex flex-col gap-3 text-lg font-extrabold text-gray-800">
               <Link href="/" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.home}</Link>
               <Link href="/exams" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.exams}</Link>
-              <Link href="/categories" onClick={() => setMobileOpen(false)} className="py-3 hover:text-indigo-600 transition-colors border-b border-gray-100">{t.categories}</Link>
-              
               <Link href="/scholarships" onClick={() => setMobileOpen(false)} className="py-3 flex items-center justify-between text-amber-600 transition-colors">
                 <span>Scholarships</span>
-                <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs uppercase px-2 py-0.5 rounded-full font-black tracking-wider animate-pulse shadow-sm">New</span>
+              </Link>
+              <Link href="/for-schools" onClick={() => setMobileOpen(false)} className="py-3 flex items-center justify-between text-indigo-600 transition-colors">
+                <span>For Schools</span>
               </Link>
             </nav>
             <div className="border-t border-gray-100 pt-5 flex flex-col gap-4">
